@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
+  before_action :require_signin, except: [:new, :create]
   before_action :find_user, except: [:index, :new, :create]
+  before_action :require_correct_user, only: [:edit, :update, :destroy]
 
   def index
     @users = User.all
@@ -15,7 +17,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to @user, notice: "Account Successfully Created!"
+      session[:user_id] = @user.id
+      redirect_to dashboard_path, notice: "Account Successfully Created!"
     else
       render :new
     end
@@ -34,6 +37,7 @@ class UsersController < ApplicationController
 
   def destroy
     @user.destroy
+    session[:user_id] = nil
     redirect_to root_url, notice: "Account Successfully Deleted!"
   end
 
@@ -45,5 +49,11 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  end
+
+  def require_correct_user
+    unless current_user?(@user)
+      redirect_to root_url, alert: "Unauthorized Access!"
+    end
   end
 end
