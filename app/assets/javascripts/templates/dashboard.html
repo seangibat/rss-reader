@@ -1,3 +1,11 @@
-<div ng-repeat="article in articles.articles">
-  {{article.article.title}}
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12" ng-repeat="article in articles">
+      <h2>{{ article.title }}</h2>
+      <p>{{ article.content }}</p>
+      <p>From {{ article.source.title }}</p>
+    </div>
+  </div>
 </div>
+
