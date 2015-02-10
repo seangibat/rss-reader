@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  resources :feeds, defaults: {format: :json}
+
   get "/signin" => "sessions#new"
   get "/signout" => "sessions#destroy"
   resource :session, only: [:new, :create, :destroy]
