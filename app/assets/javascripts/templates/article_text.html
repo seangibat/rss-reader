@@ -9,12 +9,12 @@
         </a>
       </div>
       <h3 style="vertical-align:middle" class="panel-title clearfix">
-        {{ articles[reading].title }}
+        {{ reading.title }}
       </h3>
     </div>
 
     <!-- Table -->
-    <table class="table">
+<!--     <table class="table">
       <tr>
         <th>From</th>
         <td>{{ articles[reading].source.title }}</td>
@@ -28,9 +28,9 @@
         <td><a ng-href="{{ articles[reading].link }}">{{ articles[reading].link }}</a></td>
       </tr>
     </table>
-
+ -->
     <div class="panel-body">
-      <p>{{ articles[reading].content }}</p>
+      <p ng-bind-html="sanitize(reading.content)"></p>
     </div>
 
   </div>

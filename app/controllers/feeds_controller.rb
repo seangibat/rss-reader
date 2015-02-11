@@ -11,19 +11,25 @@ class FeedsController < ApplicationController
     @feeds.each do |feed|
       urls.push feed.url
     end
-    @feedss = Feedjira::Feed.fetch_and_parse urls
-    puts @feedss
+    @feeds = Feedjira::Feed.fetch_and_parse urls
 
-    @feedss.each{ |key, feed| 
-      @feedss[key] = feed.entries.map { |entry| 
-        entry.inject({}) { |obj, attr| 
-          obj[attr[0]] = attr[1]; 
-          obj 
-        } 
-      }
-    }.to_json
+    @arrFeeds = []
 
-    render json: @feedss
+    @feeds.each{ |key, feed| 
+      @arrFeeds.push({
+        title: feed.title,
+        description: feed.description,
+        url: feed.url,
+        entries: feed.entries.map { |entry| 
+          entry.inject({}) { |obj, attr| 
+            obj[attr[0]] = attr[1]; 
+            obj 
+          } 
+        }
+      })
+    }
+
+    render json: @arrFeeds
   end
 
   # GET /feeds/1

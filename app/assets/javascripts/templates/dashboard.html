@@ -1,40 +1,43 @@
 <div class="container">
   <div class="row">
 
-    <div ng-show="reading === null" class="col-md-12" >
+    <div ng-show="reading === null" class="col-md-12" ng-repeat="feed in feeds">
 
-      <h3>Unread</h3>
-      <div class="panel panel-default" ng-repeat="article in articles">
+      <div style="width:100%; background-color: #D9ECFF; margin-bottom: 1em;" class="btn btn-default btn-lg" ng-click="feed.showing = !feed.showing">
+        {{feed.title}}
+      </div>
+      <!-- <h3 ng-show="feed.showing">{{feed.description}}</h3> -->
+      <div ng-show="feed.showing" class="panel panel-default" ng-repeat="article in feed.entries">
         <!-- Default panel contents -->
         <div class="panel-heading"><h3 class="panel-title">{{ article.title }}</h3></div>
         <div class="panel-body">
-          <p>{{ article.content.slice(0,255) + "..." }}</p>
+          <p ng-bind-html="sanitize(article.summary)"></p>
         </div>
 
         <!-- Table -->
         <table class="table">
           <tr>
-            <th>From</th>
-            <td>{{ article.source.title }}</td>
+            <th>By</th>
+            <td>{{ article.author }}</td>
           </tr>
           <tr>
             <th>Date</th>
-            <td>{{ article.date }}</td>
+            <td>{{ article.published }}</td>
           </tr>
           <tr>
             <th>Link</th>
             <td>
-            <a ng-href="{{ article.link }}">{{ article.link }}</a>
+            <a ng-href="{{ article.url }}">{{ article.url }}</a>
             </td>
           </tr>
         </table>
 
         <div class="btn-group btn-group-justified" style="padding:1em;" role="group" aria-label="...">
-          <a ng-click="read($index)" class="btn btn-default">
+          <a ng-click="read(article)" class="btn btn-default">
             <span class="glyphicon glyphicon-eye-open"></span>
             Read
           </a>
-          <a ng-click="listen($index)" class="btn btn-default">
+          <a ng-click="listen(article)" class="btn btn-default">
             <span class="glyphicon glyphicon-headphones"></span>
             Listen
           </a>
@@ -42,7 +45,6 @@
         </div>
       </div>
 
-      <h3>Read</h3>
     </div>
 
     <article-text ng-show="reading !== null"></article-text>
