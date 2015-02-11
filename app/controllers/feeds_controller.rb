@@ -1,12 +1,12 @@
 class FeedsController < ApplicationController
   require 'rss'
-  # before_action :require_signin
+  before_action :require_signin
   before_action :set_feed, only: [:show, :edit, :update, :destroy]
 
   # GET /feeds
   # GET /feeds.json
   def index
-    @feeds = Feed.all
+    @feeds = current_user.feeds.all
     urls = []
     @feeds.each do |feed|
       urls.push feed.url
@@ -18,7 +18,7 @@ class FeedsController < ApplicationController
   # GET /feeds/1
   # GET /feeds/1.json
   def show
-    @this_feed = Feed.find(params[:id])
+    @this_feed = current_user.feeds.find(params[:id])
     urls = []
     urls.push @this_feed.url
     @feed = Feedjira::Feed.fetch_and_parse urls
@@ -27,7 +27,7 @@ class FeedsController < ApplicationController
 
   # GET /feeds/new
   def new
-    @feed = Feed.new
+    @feed = current_user.feeds.new
   end
 
   # GET /feeds/1/edit
@@ -37,7 +37,7 @@ class FeedsController < ApplicationController
   # POST /feeds
   # POST /feeds.json
   def create
-    @feed = Feed.new(feed_params)
+    @feed = current_user.feeds.new(feed_params)
 
     respond_to do |format|
       if @feed.save
@@ -77,7 +77,7 @@ class FeedsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_feed
-      @feed = Feed.find(params[:id])
+      @feed = current_user.feeds.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
