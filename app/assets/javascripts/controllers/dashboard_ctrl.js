@@ -6,7 +6,8 @@ app.controller('DashboardCtrl', ['$scope', '$sce', 'Feeds', function($scope, $sc
   });
   $scope.reading = null;
   $scope.listening = null;
-  $scope.paused = false;
+  speechSynthesis.pause();
+  speechSynthesis.cancel();
 
   var voice = new SpeechSynthesisUtterance();
 
@@ -14,17 +15,17 @@ app.controller('DashboardCtrl', ['$scope', '$sce', 'Feeds', function($scope, $sc
     return $sce.trustAsHtml(str);
   }
 
-  $scope.read = function(article){
+  $scope.read = function(article, feedTitle){
     $scope.reading = article;
+    $scope.readingSourceTitle = feedTitle;
   };
 
-  $scope.listen = function(article){
-    $scope.paused = false;
+  $scope.listen = function(article, feedTitle){
     $scope.listening = article;
+    $scope.listeningSourceTitle = feedTitle;
     $scope.reading = article;
-    // voice.text = article.content.replace(/<[^>]+>/gm, '');
+    $scope.paused = false;
     voice.text = $(article.content).text();
-    console.log(voice.text);
     speechUtteranceChunker(voice);
   };
 
@@ -35,5 +36,10 @@ app.controller('DashboardCtrl', ['$scope', '$sce', 'Feeds', function($scope, $sc
       speechSynthesis.pause();
     
     $scope.paused = !$scope.paused;
+  }
+
+  $scope.stop = function(){
+    $scope.listening = null;
+    speechSynthesis.pause();
   }
 }]);

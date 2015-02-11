@@ -1,6 +1,6 @@
 <h4>Now Playing</h4>
 <h5>{{ listening.title }}</h5>
-<!-- <p>{{ articles[listening].source.title }}</p> -->
+<p>{{ listeningSourceTitle }}</p>
 
 <div class="btn-group" role="group" aria-label="..." style="margin-bottom:1em;">
   <button type="button" class="btn btn-default">
@@ -8,6 +8,9 @@
   </button>
   <button type="button" class="btn btn-default">
     slower
+  </button>
+  <button type="button" class="btn btn-default" ng-click="stop()">
+    <span class="glyphicon glyphicon-stop"></span>
   </button>
   <button type="button" class="btn btn-default" ng-click="pausePlay()">
     <span class="glyphicon glyphicon-pause" ng-show="!paused"></span>
