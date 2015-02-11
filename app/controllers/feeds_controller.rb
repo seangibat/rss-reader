@@ -11,8 +11,19 @@ class FeedsController < ApplicationController
     @feeds.each do |feed|
       urls.push feed.url
     end
-    @feed = Feedjira::Feed.fetch_and_parse urls
-    render json: @feed
+    @feedss = Feedjira::Feed.fetch_and_parse urls
+    puts @feedss
+
+    @feedss.each{ |key, feed| 
+      @feedss[key] = feed.entries.map { |entry| 
+        entry.inject({}) { |obj, attr| 
+          obj[attr[0]] = attr[1]; 
+          obj 
+        } 
+      }
+    }.to_json
+
+    render json: @feedss
   end
 
   # GET /feeds/1
@@ -21,7 +32,15 @@ class FeedsController < ApplicationController
     @this_feed = current_user.feeds.find(params[:id])
     urls = []
     urls.push @this_feed.url
-    @feed = Feedjira::Feed.fetch_and_parse urls
+    @feed = Feedjira::Feed.fetch_and_parse @this_feed.url
+
+    @feed = @feed.entries.map { |entry| 
+      entry.inject({}) { |obj, attr| 
+        obj[attr[0]] = attr[1]; 
+        obj 
+      } 
+    }.to_json
+
     render json: @feed
   end
 
