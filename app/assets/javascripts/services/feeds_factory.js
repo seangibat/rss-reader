@@ -1,3 +1,3 @@
-app.factory('Feeds', function ($resource) {
-  return $resource('/feeds');
+app.factory('Feed', function ($resource) {
+  return $resource('/feeds/:id', {id: '@id'});
 });

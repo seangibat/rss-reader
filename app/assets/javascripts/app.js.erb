@@ -7,6 +7,10 @@ app.config(['$routeProvider',
         templateUrl: '<%= asset_path("templates/dashboard.html.erb") %>',
         controller: 'DashboardCtrl'
       }).
+      when("/feeds/create", {
+        templateUrl: '<%= asset_path("templates/create_feed.html.erb") %>',
+        controller: 'FeedCtrl'
+      }).
       otherwise({
         redirectTo: '/'
       });
