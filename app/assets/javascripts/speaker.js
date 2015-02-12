@@ -3,7 +3,7 @@
     var text, utterance, settings = {};
 
     var textFn = function(str){
-        text = str;
+        text = str.trim();
     }
 
     var settingsFn = function(set){
