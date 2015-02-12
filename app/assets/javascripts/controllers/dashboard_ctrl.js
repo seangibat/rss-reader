@@ -1,4 +1,7 @@
 app.controller('DashboardCtrl', ['$scope', '$sce', 'Feed', 'Article', function($scope, $sce, Feed, Article){
+  $('.dropdown-toggle').dropdown();
+  $scope.listening = null;
+  $scope.reading = null;
   $scope.dataLoaded = false;
 
   $scope.feeds = Feed.query(function(){
@@ -7,21 +10,12 @@ app.controller('DashboardCtrl', ['$scope', '$sce', 'Feed', 'Article', function($
       $scope.dataLoaded = true;
     });
   });
-$('.dropdown-toggle').dropdown();
-
 
   $scope.articles = Article.query(function(){
     $scope.articles.forEach(function(article){
       article.showing = false;
     });
   });
-
-  $scope.reading = null;
-  $scope.listening = null;
-  speechSynthesis.pause();
-  speechSynthesis.cancel();
-
-  var voice = new SpeechSynthesisUtterance();
 
   $scope.sanitize = function(str){
     return $sce.trustAsHtml(str);
