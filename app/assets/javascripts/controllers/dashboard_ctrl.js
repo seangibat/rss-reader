@@ -4,17 +4,29 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
   $scope.reading = null;
   $scope.articlesShowing = false;
 
-  $scope.feeds = Feed.query(function(){
-    $scope.feeds.forEach(function(feed){
-      feed.showing = false;
+  var storedFeeds = sessionStorage.getItem('feeds');
+  if(storedFeeds){
+    $scope.feeds = JSON.parse(storedFeeds);
+  } else {
+    $scope.feeds = Feed.query(function(){
+      sessionStorage.setItem('feeds', JSON.stringify($scope.feeds));
+      $scope.feeds.forEach(function(feed){
+        feed.showing = false;
+      });
     });
-  });
+  }
 
-  $scope.articles = Article.query(function() {
-    $scope.articles.forEach(function(article) {
-      article.isArticle = true;
+  var storedArticles = sessionStorage.getItem('articles');
+  if(storedArticles){
+    $scope.articles = JSON.parse(storedArticles);
+  } else {
+    $scope.articles = Article.query(function() {
+      sessionStorage.setItem('articles', JSON.stringify($scope.articles));
+      $scope.articles.forEach(function(article) {
+        article.isArticle = true;
+      });
     });
-  });
+  }
 
   $scope.sanitize = function(str){
     return $sce.trustAsHtml(str);
