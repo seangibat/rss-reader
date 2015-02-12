@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
     if user = User.authenticate(params[:email], params[:password])
       session[:user_id] = user.id
       flash[:notice] = "Welcome back, #{user.name}!"
-      redirect_to dashboard_path
+      redirect_to root_path
     else
       flash.now[:alert] = "Invalid email/password combination!"
       render :new
