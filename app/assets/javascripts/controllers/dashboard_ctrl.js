@@ -2,20 +2,15 @@ app.controller('DashboardCtrl', ['$scope', '$sce', 'Feed', 'Article', function($
   $('.dropdown-toggle').dropdown();
   $scope.listening = null;
   $scope.reading = null;
-  $scope.dataLoaded = false;
+  $scope.articlesShowing = false;
 
   $scope.feeds = Feed.query(function(){
     $scope.feeds.forEach(function(feed){
       feed.showing = false;
-      $scope.dataLoaded = true;
     });
   });
 
-  $scope.articles = Article.query(function(){
-    $scope.articles.forEach(function(article){
-      article.showing = false;
-    });
-  });
+  $scope.articles = Article.query();
 
   $scope.sanitize = function(str){
     return $sce.trustAsHtml(str);
