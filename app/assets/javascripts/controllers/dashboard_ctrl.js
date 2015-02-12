@@ -4,6 +4,7 @@ app.controller('DashboardCtrl', ['$scope', '$sce', 'Feeds', function($scope, $sc
     $scope.feeds.forEach(function(feed){
       feed.showing = false;
       $scope.dataLoaded = true;
+      $('.dropdown-toggle').dropdown();
     });
   });
   $scope.reading = null;
