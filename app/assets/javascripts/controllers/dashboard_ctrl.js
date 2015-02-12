@@ -1,12 +1,21 @@
-app.controller('DashboardCtrl', ['$scope', '$sce', 'Feed', function($scope, $sce, Feed){
+app.controller('DashboardCtrl', ['$scope', '$sce', 'Feed', 'Article', function($scope, $sce, Feed, Article){
   $scope.dataLoaded = false;
+
   $scope.feeds = Feed.query(function(){
     $scope.feeds.forEach(function(feed){
       feed.showing = false;
       $scope.dataLoaded = true;
-      $('.dropdown-toggle').dropdown();
     });
   });
+$('.dropdown-toggle').dropdown();
+
+
+  $scope.articles = Article.query(function(){
+    $scope.articles.forEach(function(article){
+      article.showing = false;
+    });
+  });
+
   $scope.reading = null;
   $scope.listening = null;
   speechSynthesis.pause();
