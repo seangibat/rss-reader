@@ -43,4 +43,12 @@ app.controller('DashboardCtrl', ['$scope', '$sce', 'Feed', 'Article', function($
     $scope.listening = null;
     speaker.stop();
   }
+
+  $scope.increaseRate = function() {
+    speaker.increaseRate();
+  };
+
+  $scope.decreaseRate = function() {
+    speaker.decreaseRate();
+  };
 }]);
