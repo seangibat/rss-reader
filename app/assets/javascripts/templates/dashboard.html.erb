@@ -1,7 +1,7 @@
 <div class="container">
   <div class="row">
 
-    <div ng-show="reading === null" class="col-md-12">
+    <div ng-show="reading === null && articles.length" class="col-md-12">
 
       <div style="width:100%; background-color: pink; margin-bottom: 1em;" class="btn btn-default btn-lg" ng-click="articlesShowing = !articlesShowing">
         Your Saved Articles
@@ -87,7 +87,7 @@
 
     </div>
 
-    <div ng-hide="dataLoaded" class="loading-icon">
+    <div ng-show="!feeds.length && !articles.length" class="loading-icon">
       <%= image_tag "ajax-loader.gif" %>
     </div>
 
