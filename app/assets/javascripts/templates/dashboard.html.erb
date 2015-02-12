@@ -1,10 +1,6 @@
 <div class="container">
   <div class="row">
 
-    <div ng-hide="dataLoaded" class="loading-icon">
-    <%= image_tag "ajax-loader.gif" %>
-    </div>
-
     <div ng-show="reading === null" class="col-md-12">
 
       <div style="width:100%; background-color: pink; margin-bottom: 1em;" class="btn btn-default btn-lg" ng-click="articlesShowing = !articlesShowing">
@@ -43,7 +39,7 @@
 
     </div>
 
-    <! ---- ARTICLES / RSS FEEDS ----- >
+    <!-- ARTICLES / RSS FEEDS -->
 
     <div ng-show="reading === null" class="col-md-12" ng-repeat="feed in feeds">
 
@@ -91,9 +87,13 @@
 
     </div>
 
-    <article-text ng-show="reading !== null"></article-text>
+    <div ng-hide="dataLoaded" class="loading-icon">
+      <%= image_tag "ajax-loader.gif" %>
+    </div>
 
-    <div class="text-center" ng-show="listening !== null" style="position:fixed; bottom:0; left:0; right:0; background-color:#EEE; border-top: 1px solid #DDD">
+    <article-text ng-show="reading"></article-text>
+
+    <div class="text-center" ng-show="listening" style="position:fixed; bottom:0; left:0; right:0; background-color:#EEE; border-top: 1px solid #DDD">
       <article-listen></article-listen>
     </div>
 
