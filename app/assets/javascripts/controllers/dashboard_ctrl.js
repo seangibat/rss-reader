@@ -27,22 +27,22 @@ app.controller('DashboardCtrl', ['$scope', '$sce', 'Feed', function($scope, $sce
     $scope.listening = article;
     $scope.listeningSourceTitle = feedTitle;
     $scope.reading = article;
-    $scope.paused = false;
-    voice.text = $(article.content).text();
-    speechUtteranceChunker(voice);
+
+    speaker.text($(article.content).text());
+    speaker.speak();
   };
 
   $scope.pausePlay = function(){
     if ($scope.paused)
-      speechSynthesis.resume();
+      speaker.resume();
     else
-      speechSynthesis.pause();
+      speaker.pause();
     
     $scope.paused = !$scope.paused;
   }
 
   $scope.stop = function(){
     $scope.listening = null;
-    speechSynthesis.pause();
+    speaker.stop();
   }
 }]);
