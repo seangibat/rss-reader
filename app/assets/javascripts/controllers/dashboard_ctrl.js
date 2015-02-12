@@ -1,4 +1,4 @@
-app.controller('DashboardCtrl', ['$scope', '$sce', 'Feed', 'Article', function($scope, $sce, Feed, Article){
+app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', function($scope, $route, $sce, Feed, Article){
   $('.dropdown-toggle').dropdown();
   $scope.listening = null;
   $scope.reading = null;
@@ -10,7 +10,11 @@ app.controller('DashboardCtrl', ['$scope', '$sce', 'Feed', 'Article', function($
     });
   });
 
-  $scope.articles = Article.query();
+  $scope.articles = Article.query(function() {
+    $scope.articles.forEach(function(article) {
+      article.isArticle = true;
+    });
+  });
 
   $scope.sanitize = function(str){
     return $sce.trustAsHtml(str);
@@ -51,4 +55,15 @@ app.controller('DashboardCtrl', ['$scope', '$sce', 'Feed', 'Article', function($
   $scope.decreaseRate = function() {
     speaker.decreaseRate();
   };
+
+  $scope.saveArticle = function() {
+    var url = $scope.reading.url;
+
+    var newArticle = new Article({url: url});
+    newArticle.$save(function() {
+      console.log("Article Saved!");
+      $route.reload();
+    });
+  };
+
 }]);
