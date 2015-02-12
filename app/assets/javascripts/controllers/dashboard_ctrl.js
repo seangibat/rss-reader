@@ -1,6 +1,6 @@
-app.controller('DashboardCtrl', ['$scope', '$sce', 'Feeds', function($scope, $sce, Feeds){
+app.controller('DashboardCtrl', ['$scope', '$sce', 'Feed', function($scope, $sce, Feed){
   $scope.dataLoaded = false;
-  $scope.feeds = Feeds.query(function(){
+  $scope.feeds = Feed.query(function(){
     $scope.feeds.forEach(function(feed){
       feed.showing = false;
       $scope.dataLoaded = true;
