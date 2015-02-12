@@ -1,24 +1,38 @@
 (function(){
     'use strict';
-    var text, utterance, settings = {};
+    var text, utterance, API = {};
+    var settings = {
+        rate: 1,
+        volume: 1,
+        pitch: 1
+    };
 
-    var textFn = function(str){
+    API.text = function(str){
         text = str.trim();
+        return API;
     }
 
-    var settingsFn = function(set){
+    API.settings = function(set){
         if (!set) return settings;
 
         settings.voice = set.voice || settings.voice;
         settings.rate = set.rate || settings.rate;
         settings.pitch = set.pitch || settings.pitch;
         settings.volume = set.volume || settings.volume;
+
+        return API;
     }
 
-    var speakFn =  function(){
-        var _text = text.replace(/\n/g,' '), chunk;
+    API.defaultSettings = function(){
+        settings = {
+            rate: 1,
+            volume: 1,
+            pitch: 1
+        };
+    }
 
-        console.log(_text);
+    API.speak =  function(){
+        var _text = text, chunk;
 
         var createNewChunkUtterance = function(){
             var chunk = _text.match(/(^.{1,250}[!.?])|(^.{1,250})/g);
@@ -27,9 +41,9 @@
             _text = _text.substring(chunk.length);
             utterance = new SpeechSynthesisUtterance(chunk);
             utterance.voice = settings.voice;
-            utterance.rate = settings.rate || 1;
-            utterance.pitch = settings.pitch || 1;
-            utterance.volume = settings.volume || 1;
+            utterance.rate = settings.rate;
+            utterance.pitch = settings.pitch;
+            utterance.volume = settings.volume;
             return utterance;
         }
 
@@ -43,40 +57,53 @@
             };
         }
 
-        if (speechSynthesis.speaking) stopFn();
+        if (speechSynthesis.speaking) API.stop();
         play();
+        return API;
     }
 
-    var pauseFn = function(){
+    API.pause = function(){
         speechSynthesis.pause();
+        return API;
     }
 
-    var resumeFn = function(){
+    API.resume = function(){
         speechSynthesis.resume();
+        return API;
     }
 
-    var stopFn = function(){
+    API.stop = function(){
         utterance.onend = null;
         speechSynthesis.cancel();
+        return API;
     }
 
-    var voiceFn = function(name, lang){
+    API.voice = function(name, lang){
         var v = speechSynthesis.getVoices().filter(function(voice) { 
             return (voice.name.indexOf(name) >= 0) && (lang ? (voice.lang.indexOf(lang) >= 0) : true)
         })[0];
-        if (v) return settings.voice = v;
-        return null;
+        console.log(v);
+        if (v) settings.voice = v;
+        return API;
     }
 
-    voiceFn('Bruce');
-
-    window.speaker = {
-        speak    : speakFn,
-        text     : textFn,
-        settings : settingsFn,
-        pause    : pauseFn,
-        resume   : resumeFn,
-        stop     : stopFn,
-        voice    : voiceFn,
+    API.pitch = function(n){
+        settings.pitch = n;
+        return API;
     }
+
+    API.increaseRate = function(by){
+        var increaseBy = by || 0.5;
+        settings.rate += increaseBy;
+        console.log(settings.rate);
+        return API;
+    }
+
+    API.decreaseRate = function(by){
+        var decreaseBy = by || 0.5;
+        settings.rate -= decreaseBy;
+        return API;
+    }
+
+    window.speaker = API;
 })();

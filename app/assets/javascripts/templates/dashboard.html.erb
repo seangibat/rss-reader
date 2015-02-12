@@ -87,7 +87,7 @@
 
     </div>
 
-    <div ng-show="!feeds.length && !articles.length" class="loading-icon">
+    <div ng-show="!feeds.length || !articles.length" class="loading-icon">
       <%= image_tag "ajax-loader.gif" %>
     </div>
 

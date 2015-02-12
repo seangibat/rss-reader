@@ -6,7 +6,7 @@
   <button type="button" class="btn btn-default">
     <span class="glyphicon glyphicon-step-backward"></span>
   </button>
-  <button type="button" class="btn btn-default">
+  <button type="button" class="btn btn-default" ng-click="decreaseRate()">
     slower
   </button>
   <button type="button" class="btn btn-default" ng-click="stop()">
@@ -16,7 +16,7 @@
     <span class="glyphicon glyphicon-pause" ng-show="!paused"></span>
     <span class="glyphicon glyphicon-play" ng-show="paused"></span>
   </button>
-  <button type="button" class="btn btn-default">
+  <button type="button" class="btn btn-default" ng-click="increaseRate()">
     faster
   </button>
   <button type="button" class="btn btn-default">
