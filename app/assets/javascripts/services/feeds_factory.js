@@ -1,14 +1,19 @@
 app.factory('Feed', ['$resource', function ($resource) {
   var Feed = $resource('/feeds/:id', {id: '@id'});
 
-  var query = function() {
-    var feeds = Feed.query(function(feeds) {
-      feeds.forEach(function(feed) {
-        feed.showing = false;
+  var query = function(cb) {
+    var sessionFeeds = sessionStorage.getItem('feeds');
+    if(sessionFeeds){
+      cb(JSON.parse(sessionFeeds));
+    } else {
+      Feed.query(function(feeds) {
+        feeds.forEach(function(feed) {
+          feed.showing = false;
+        });
+        sessionStorage.setItem('feeds', JSON.stringify(feeds));
+        cb(feeds);
       });
-      sessionStorage.setItem('feeds', JSON.stringify(feeds));
-    });
-    return feeds;
+    }
   }
 
   var save = function(feedUrl, callback) {

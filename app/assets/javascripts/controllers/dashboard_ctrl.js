@@ -7,22 +7,16 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
   $scope.showLoading = function() {
     return !$scope.feeds.length || !$scope.articles.length;
   };
+  
   // Query for articles if not found in sessionStorage
-  var sessionArticles = sessionStorage.getItem('articles');
-  if(sessionArticles) {
-    $scope.articles = JSON.parse(sessionArticles);
-  } else {
-    $scope.articles = Article.query();
-  }
-
+  Article.query(function(data){
+    $scope.articles = data;
+  });
 
   // Query for feeds if not found in sessionStorage 
-  var sessionFeeds = sessionStorage.getItem('feeds');
-  if(sessionFeeds){
-    $scope.feeds = JSON.parse(sessionFeeds);
-  } else {
-    $scope.feeds = Feed.query();
-  }
+  Feed.query(function(data){
+    $scope.feeds = data;
+  });
 
   $scope.saveArticle = function() {
     var url = $scope.reading.url;
