@@ -1,15 +1,23 @@
 <header class="navbar navbar-default">
   <div class="container">
-    <a href="/#/" id="logo">RSS-Dictator</a>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#dictator-header">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a href="/#/" id="logo">RSS-Dictator</a>
+    </div>
     <nav>
-      <ul class="nav navbar-nav pull-right">
+      <ul class="nav navbar-nav pull-right collapse navbar-collapse" id="dictator-header">
         <% unless current_user %>
           <li><%= link_to "Sign In", signin_path %></li>
           <li><%= link_to "Sign Up", signup_path %></li>
         <% else %>
           <li><a href="/#/settings">Voice Settings</a></li>
-          <li><a href="/#/feeds/create">Add Feed</a></li>
-          <li><a href="/#/articles/create">Add Article</a></li>
+          <li><a href="/#/feeds/manage">Manage Feeds</a></li>
+          <li><a href="/#/articles/manage">Manage Articles</a></li>
           <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><%= current_user.name %> <span class="caret"></span></a>
             <ul class="dropdown-menu" role="menu">
