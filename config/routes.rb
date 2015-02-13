@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
-  resources :articles
+  resources :articles, defaults: {format: :json}
 
   resources :feeds, defaults: {format: :json}
 

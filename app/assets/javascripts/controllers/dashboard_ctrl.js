@@ -20,8 +20,8 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
 
   $scope.saveArticle = function() {
     var url = $scope.reading.url;
-    Article.save(url, function() {
-      $route.reload();
+    Article.save(url, function(sessionArticles) {
+      $scope.articles = sessionArticles;
     });
   };
 
@@ -40,6 +40,12 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
     $scope.Speaker.play(article);
     $scope.listeningSourceTitle = feedTitle;
     $scope.reading = article;
+  };
+
+  $scope.archiveArticle = function() {
+    Article.update($scope.reading, function(sessionArticles) {
+      $scope.articles = sessionArticles;
+    });
   };
 
 }]);
