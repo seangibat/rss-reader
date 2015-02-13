@@ -19,7 +19,9 @@ app.factory('Article', ['$resource', function ($resource) {
       sessionStorageArticles.push(savedArticle);
       sessionStorageArticles = JSON.stringify(sessionStorageArticles);
       sessionStorage.setItem('articles', sessionStorageArticles);
-      callback();
+      if(callback) {
+        callback();
+      }
     });
   }
 

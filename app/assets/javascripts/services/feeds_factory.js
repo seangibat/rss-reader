@@ -20,7 +20,9 @@ app.factory('Feed', ['$resource', function ($resource) {
         sessionFeeds = JSON.parse(sessionFeeds);
         sessionFeeds.push(foundFeed);
         sessionFeeds = JSON.stringify(sessionFeeds);
-        callback
+        if(callback) {
+          callback()
+        }
       })
     });
   }
