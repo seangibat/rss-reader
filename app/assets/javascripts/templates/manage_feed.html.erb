@@ -8,3 +8,14 @@
     </div>
   </form>
 </div>
+<div>
+  <h1 style="text-align:center">Remove RSS/Atom Feed</h1>
+  <table class="table table-border table-hover">
+    <tr ng-repeat="feed in feeds">
+      <td>
+        {{feed.title}}
+      </td>
+      <td><button ng-click="deleteFeed(feed.id)">Delete</button></td>
+    </tr>
+  </table>
+</div>

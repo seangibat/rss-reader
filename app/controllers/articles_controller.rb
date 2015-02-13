@@ -8,7 +8,7 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
-    @articles = current_user.articles.where(archive: false)
+    @articles = current_user.articles.all
     render json: @articles
   end
 
