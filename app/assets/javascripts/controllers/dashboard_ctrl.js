@@ -4,34 +4,38 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
   $scope.reading = null;
   $scope.articlesShowing = false;
 
-  var storedFeeds = sessionStorage.getItem('feeds');
-  if(storedFeeds){
-    $scope.feeds = JSON.parse(storedFeeds);
+
+  // Query for articles if not found in sessionStorage
+  var sessionArticles = sessionStorage.getItem('articles');
+  if(sessionArticles) {
+    $scope.articles = JSON.parse(sessionArticles)
   } else {
-    $scope.feeds = Feed.query(function(){
-      sessionStorage.setItem('feeds', JSON.stringify($scope.feeds));
-      $scope.feeds.forEach(function(feed){
-        feed.showing = false;
-      });
-    });
+    $scope.articles = Article.query();
   }
 
-  var storedArticles = sessionStorage.getItem('articles');
-  if(storedArticles){
-    $scope.articles = JSON.parse(storedArticles);
+
+  // Query for feeds if not found in sessionStorage 
+  var sessionFeeds = sessionStorage.getItem('feeds');
+  if(sessionFeeds){
+    $scope.feeds = JSON.parse(sessionFeeds);
   } else {
-    $scope.articles = Article.query(function() {
-      sessionStorage.setItem('articles', JSON.stringify($scope.articles));
-      $scope.articles.forEach(function(article) {
-        article.isArticle = true;
-      });
-    });
+    $scope.feeds = Feed.query();
   }
 
+  $scope.saveArticle = function() {
+    var url = $scope.reading.url;
+    Article.save(url, function() {
+      $route.reload();
+    })
+  };
+
+  // Allow Angular to display content text as html
   $scope.sanitize = function(str){
     return $sce.trustAsHtml(str);
   }
 
+
+  // User Controls
   $scope.read = function(article, feedTitle){
     $scope.reading = article;
     $scope.readingSourceTitle = feedTitle;
@@ -46,6 +50,8 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
     speaker.speak();
   };
 
+
+  // speechSynthesis controls
   $scope.pausePlay = function(){
     if ($scope.paused)
       speaker.resume();
@@ -68,14 +74,5 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
     speaker.decreaseRate();
   };
 
-  $scope.saveArticle = function() {
-    var url = $scope.reading.url;
-
-    var newArticle = new Article({url: url});
-    newArticle.$save(function() {
-      console.log("Article Saved!");
-      $route.reload();
-    });
-  };
 
 }]);
