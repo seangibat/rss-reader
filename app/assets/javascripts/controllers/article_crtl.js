@@ -10,7 +10,9 @@ app.controller("ArticleCtrl", ["$scope", "$location", "Article", function($scope
   });
 
   $scope.deleteArticle = function(articleId) {
-    Article.destroy(articleId);
+    Article.destroy(articleId, function(sessionArticles) {
+      $scope.articles = sessionArticles;
+    });
   }
 
 }]);

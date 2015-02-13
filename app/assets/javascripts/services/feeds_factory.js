@@ -36,8 +36,27 @@ app.factory('Feed', ['$resource', function ($resource) {
     });
   }
 
+  var destroy = function(feedId, callback) {
+    Feed.remove({id:feedId}, function() {
+      var sessionFeeds = sessionStorage.getItem('feeds');
+      sessionFeeds = JSON.parse(sessionFeeds);
+      for (var i=0; i < sessionFeeds.length; i++) {
+        if (feedId === sessionFeeds[i].id) {
+          sessionFeeds.splice(i, 1);
+          }
+          if (callback) {
+            callback(sessionFeeds);
+          }
+          sessionFeeds = JSON.stringify(sessionFeeds);
+          sessionStorage.setItem('feeds', sessionFeeds);
+          break;
+        }
+    });
+  }
+
   return {
     query: query,
-    save: save
+    save: save,
+    destroy: destroy
   }
 }]);

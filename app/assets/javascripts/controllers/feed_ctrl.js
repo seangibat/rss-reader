@@ -11,7 +11,11 @@ app.controller("FeedCtrl", ["$scope", "$location", "Feed", function($scope, $loc
   });
 
   $scope.deleteFeed = function(feedId) {
-    Feed.destroy(feedId);
+    console.log($scope.feeds);
+    console.log(feedId);
+    Feed.destroy(feedId, function(sessionFeeds) {
+      $scope.feeds = sessionFeeds;
+    });
   }
 
 }]);
