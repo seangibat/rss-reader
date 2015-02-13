@@ -1,6 +1,6 @@
-app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', function($scope, $route, $sce, Feed, Article){
+app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 'Speaker', function($scope, $route, $sce, Feed, Article, Speaker){
   $('.dropdown-toggle').dropdown();
-  $scope.listening = null;
+  $scope.Speaker = Speaker;
   $scope.reading = null;
   $scope.articlesShowing = false;
 
@@ -30,7 +30,6 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
     return $sce.trustAsHtml(str);
   }
 
-
   // User Controls
   $scope.read = function(article, feedTitle){
     $scope.reading = article;
@@ -38,37 +37,9 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
   };
 
   $scope.listen = function(article, feedTitle){
-    $scope.listening = article;
+    $scope.Speaker.play(article);
     $scope.listeningSourceTitle = feedTitle;
     $scope.reading = article;
-
-    speaker.text($(article.content).text());
-    speaker.speak();
   };
-
-
-  // speechSynthesis controls
-  $scope.pausePlay = function(){
-    if ($scope.paused)
-      speaker.resume();
-    else
-      speaker.pause();
-    
-    $scope.paused = !$scope.paused;
-  }
-
-  $scope.stop = function(){
-    $scope.listening = null;
-    speaker.stop();
-  }
-
-  $scope.increaseRate = function() {
-    speaker.increaseRate();
-  };
-
-  $scope.decreaseRate = function() {
-    speaker.decreaseRate();
-  };
-
 
 }]);
