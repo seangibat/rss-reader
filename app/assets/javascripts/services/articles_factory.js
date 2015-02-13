@@ -1,14 +1,19 @@
 app.factory('Article', ['$resource', function ($resource) {
   var Article = $resource('/articles/:id', {id: '@id'}, {update: {method: 'PATCH'}});
 
-  var query = function() {
-    var articles = Article.query(function(articles) {
-      articles.forEach(function(article) {
-        article.isArticle = true;
+  var query = function(cb) {
+    var sessionArticles = sessionStorage.getItem('articles');
+    if(sessionArticles) {
+      cb(JSON.parse(sessionArticles));
+    } else {
+      Article.query(function(articles) {
+        articles.forEach(function(article) {
+          article.isArticle = true;
+        });
+        sessionStorage.setItem('articles', JSON.stringify(articles));
+        cb(articles);
       });
-      sessionStorage.setItem('articles', JSON.stringify(articles));
-    });
-    return articles
+    }
   }
 
   var save = function(saveUrl, callback) {
