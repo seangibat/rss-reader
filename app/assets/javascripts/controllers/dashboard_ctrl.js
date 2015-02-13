@@ -28,7 +28,7 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
   // Allow Angular to display content text as html
   $scope.sanitize = function(str){
     return $sce.trustAsHtml(str);
-  }
+  };
 
   // User Controls
   $scope.read = function(article, feedTitle){
