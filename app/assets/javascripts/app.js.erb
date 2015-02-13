@@ -15,6 +15,10 @@ app.config(['$routeProvider',
         templateUrl: '<%= asset_path("templates/create_article.html.erb") %>',
         controller: 'ArticleCtrl'
       }).
+      when("/settings", {
+        templateUrl: '<%= asset_path("templates/voice_settings.html") %>',
+        controller: 'VoiceSettingsCtrl'
+      }).
       otherwise({
         redirectTo: '/'
       });
