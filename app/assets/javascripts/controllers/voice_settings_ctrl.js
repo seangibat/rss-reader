@@ -1,9 +1,9 @@
-app.controller("VoiceSettingsCtrl", ["$scope", "VoiceSettings", "$interval", function($scope, VoiceSettings, $interval) {
+app.controller("VoiceSettingsCtrl", ["$scope", "VoiceSettings", "$interval", '$location', function($scope, VoiceSettings, $interval, $location) {
   $scope.VoiceSettings = VoiceSettings;
 
   $scope.save = function(){
     VoiceSettings.save();
-    $scope.saveMessage = "Saved!";
+    $location.path("/");
   }
 
   var prom = $interval(function(){
@@ -15,11 +15,10 @@ app.controller("VoiceSettingsCtrl", ["$scope", "VoiceSettings", "$interval", fun
     });
     $scope.selectedLang = "en-US";
     $scope.voices = speechSynthesis.getVoices();
-    console.log($scope.voices, $scope.languages);
 
     if ($scope.languages.length) {
       $interval.cancel(prom);
     }
-  },500);
+  }, 500);
 
 }]);
