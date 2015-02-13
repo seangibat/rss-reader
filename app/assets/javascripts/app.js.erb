@@ -7,12 +7,12 @@ app.config(['$routeProvider',
         templateUrl: '<%= asset_path("templates/dashboard.html.erb") %>',
         controller: 'DashboardCtrl'
       }).
-      when("/feeds/create", {
-        templateUrl: '<%= asset_path("templates/create_feed.html.erb") %>',
+      when("/feeds/manage", {
+        templateUrl: '<%= asset_path("templates/manage_feed.html.erb") %>',
         controller: 'FeedCtrl'
       }).
-      when("/articles/create", {
-        templateUrl: '<%= asset_path("templates/create_article.html.erb") %>',
+      when("/articles/manage", {
+        templateUrl: '<%= asset_path("templates/manage_article.html.erb") %>',
         controller: 'ArticleCtrl'
       }).
       when("/settings", {

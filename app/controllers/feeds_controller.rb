@@ -17,12 +17,13 @@ class FeedsController < ApplicationController
 
     id_count = 0
     @feedjira_feeds.each{ |key, feed|
+      this_id = @feeds[id_count].id
       id_count += 1
       @arrFeeds.push({
         title: feed.title,
         description: feed.description,
         url: feed.url,
-        id: id_count,
+        id: this_id,
         entries: feed.entries.map { |entry| 
           entry.inject({}) { |obj, attr| 
             obj[attr[0]] = attr[1]; 
