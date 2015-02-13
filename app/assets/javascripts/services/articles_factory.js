@@ -12,8 +12,8 @@ app.factory('Article', ['$resource', function ($resource) {
             article.isArticle = true;
           });
           sessionStorage.setItem('articles', JSON.stringify(articles));
-          cb(articles);
         }
+        cb(articles);
       });
     }
   }
