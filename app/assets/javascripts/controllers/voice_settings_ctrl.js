@@ -1,5 +1,6 @@
 app.controller("VoiceSettingsCtrl", ["$scope", "VoiceSettings", "$interval", '$location', function($scope, VoiceSettings, $interval, $location) {
   $scope.VoiceSettings = VoiceSettings;
+  console.log(VoiceSettings.settings.lang)
 
   $scope.save = function(){
     VoiceSettings.save();
@@ -13,7 +14,7 @@ app.controller("VoiceSettingsCtrl", ["$scope", "VoiceSettings", "$interval", '$l
         $scope.languages.push(voice.lang) 
       }
     });
-    $scope.selectedLang = "en-US";
+
     $scope.voices = speechSynthesis.getVoices();
 
     if ($scope.languages.length) {

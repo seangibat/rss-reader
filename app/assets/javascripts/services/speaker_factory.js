@@ -1,10 +1,11 @@
-app.factory('Speaker', [function () {
+app.factory('Speaker', ['VoiceSettings', function (VoiceSettings) {
   var service = {
     listening: null,
     paused: true
   }
 
   service.play = function(article){
+    speaker.voice(VoiceSettings.settings.voice.name);
     service.paused = false;
     service.listening = article;
     speaker.text($(article.content).text());

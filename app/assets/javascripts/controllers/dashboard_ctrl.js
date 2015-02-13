@@ -3,19 +3,20 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
   $scope.Speaker = Speaker;
   $scope.reading = null;
   $scope.articlesShowing = false;
+  var loaded = 0;
 
   $scope.showLoading = function() {
-    return !$scope.feeds.length || !$scope.articles.length;
+    return loaded < 2;
   };
   
-  // Query for articles if not found in sessionStorage
   Article.query(function(data){
     $scope.articles = data;
+    loaded++;
   });
 
-  // Query for feeds if not found in sessionStorage 
   Feed.query(function(data){
     $scope.feeds = data;
+    loaded++;
   });
 
   $scope.saveArticle = function() {

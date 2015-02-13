@@ -6,7 +6,8 @@ app.factory('VoiceSettings', [function () {
       rate: 1,
       volume: 1,
       voice: null,
-      pitch: 1
+      pitch: 1,
+      lang: ""
     }
   }
 
@@ -15,6 +16,7 @@ app.factory('VoiceSettings', [function () {
   var save = function(set){
     settings = set || settings;
     speaker.settings(settings);
+    speaker.voice(settings.voice.name);
     localStorage.setItem("voiceSettings", JSON.stringify(settings));
   }
 
