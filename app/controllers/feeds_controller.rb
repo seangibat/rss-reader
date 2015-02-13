@@ -40,12 +40,12 @@ class FeedsController < ApplicationController
     urls.push @this_feed.url
     @feed = Feedjira::Feed.fetch_and_parse @this_feed.url
 
-    @feed = @feed.entries.map { |entry| 
+    @feed.entries = @feed.entries.map { |entry| 
       entry.inject({}) { |obj, attr| 
         obj[attr[0]] = attr[1]; 
         obj 
       } 
-    }.to_json
+    }
 
     render json: @feed
   end

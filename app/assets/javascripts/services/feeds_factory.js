@@ -18,16 +18,20 @@ app.factory('Feed', ['$resource', function ($resource) {
 
   var save = function(feedUrl, callback) {
     var feed = new Feed({url: feedUrl});
+    console.log(feed);
     feed.$save(function(savedFeed){
+      console.log(savedFeed);
       var savedFeedId = savedFeed.id;
       Feed.get({id: savedFeedId}, function(foundFeed) {
+        console.log(foundFeed);
         var sessionFeeds = sessionStorage.getItem('feeds');
         sessionFeeds = JSON.parse(sessionFeeds);
         sessionFeeds.push(foundFeed);
-        sessionFeeds = JSON.stringify(sessionFeeds);
         if(callback) {
-          callback()
+          callback(sessionFeeds)
         }
+        sessionFeeds = JSON.stringify(sessionFeeds);
+        sessionStorage.setItem('feeds', sessionFeeds);
       })
     });
   }
