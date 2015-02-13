@@ -4,11 +4,13 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
   $scope.reading = null;
   $scope.articlesShowing = false;
 
-
+  $scope.showLoading = function() {
+    return !$scope.feeds.length || !$scope.articles.length;
+  };
   // Query for articles if not found in sessionStorage
   var sessionArticles = sessionStorage.getItem('articles');
   if(sessionArticles) {
-    $scope.articles = JSON.parse(sessionArticles)
+    $scope.articles = JSON.parse(sessionArticles);
   } else {
     $scope.articles = Article.query();
   }
@@ -26,7 +28,7 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
     var url = $scope.reading.url;
     Article.save(url, function() {
       $route.reload();
-    })
+    });
   };
 
   // Allow Angular to display content text as html

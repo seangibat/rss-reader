@@ -1,5 +1,5 @@
 app.factory('Feed', ['$resource', function ($resource) {
-  $resource('/feeds/:id', {id: '@id'});
+  var Feed = $resource('/feeds/:id', {id: '@id'});
 
   var query = function() {
     var feeds = Feed.query(function(feeds) {
@@ -8,6 +8,7 @@ app.factory('Feed', ['$resource', function ($resource) {
       });
       sessionStorage.setItem('feeds', JSON.stringify(feeds));
     });
+    return feeds;
   }
 
   var save = function(feedUrl, callback) {
@@ -24,4 +25,8 @@ app.factory('Feed', ['$resource', function ($resource) {
     });
   }
 
+  return {
+    query: query,
+    save: save
+  }
 }]);

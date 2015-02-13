@@ -1,15 +1,14 @@
-app.factory('Article', ['$resource', '$location', function ($resource, $location) {
-  var Article = $resource('/articles/:id', {id: '@id'});
+app.factory('Article', ['$resource', function ($resource) {
+  var Article = $resource('/articles/:id', {id: '@id'}, {update: {method: 'PATCH'}});
 
   var query = function() {
-    var articles = Article.query(function() {
+    var articles = Article.query(function(articles) {
       articles.forEach(function(article) {
         article.isArticle = true;
       });
       sessionStorage.setItem('articles', JSON.stringify(articles));
-      console.log(articles);
-      return articles
     });
+    return articles
   }
 
   var save = function(saveUrl, callback) {
@@ -20,7 +19,7 @@ app.factory('Article', ['$resource', '$location', function ($resource, $location
       sessionStorageArticles.push(savedArticle);
       sessionStorageArticles = JSON.stringify(sessionStorageArticles);
       sessionStorage.setItem('articles', sessionStorageArticles);
-      callback;
+      callback();
     });
   }
 
