@@ -5,4 +5,13 @@ app.controller("FeedCtrl", ["$scope", "$location", "Feed", function($scope, $loc
       $location.path('/');
     });
   }
+
+  Feed.query(function(data) {
+    $scope.feeds = data;
+  });
+
+  $scope.deleteFeed = function(feedId) {
+    Feed.destroy(feedId);
+  }
+
 }]);

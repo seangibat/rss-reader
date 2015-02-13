@@ -4,4 +4,13 @@ app.controller("ArticleCtrl", ["$scope", "$location", "Article", function($scope
       $location.path('/');
     });
   }
+
+  Article.query(function(data) {
+    $scope.articles = data;
+  });
+
+  $scope.deleteArticle = function(articleId) {
+    Article.destroy(articleId);
+  }
+
 }]);
