@@ -8,15 +8,14 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
-    @articles = current_user.articles.all
+    @articles = current_user.articles.where(archive: false)
     render json: @articles
   end
 
   # GET /articles/1
   # GET /articles/1.json
   def show
-    @this_article = current_user.articles.find(params[:id])
-    render json: @this_article
+    render json: @article
   end
 
   # GET /articles/new
@@ -83,6 +82,6 @@ class ArticlesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def article_params
-      params.require(:article).permit(:url)
+      params.require(:article).permit(:url, :archive)
     end
 end
