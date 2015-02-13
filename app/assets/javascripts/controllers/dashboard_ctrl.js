@@ -5,19 +5,20 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
   $scope.articlesShowing = false;
   var loaded = 0;
 
-  $scope.showLoading = function() {
-    return loaded < 2;
-  };
-  
   Article.query(function(data){
+    ++loaded;
     $scope.articles = data;
-    loaded++;
   });
 
   Feed.query(function(data){
+    ++loaded;
     $scope.feeds = data;
-    loaded++;
   });
+
+  $scope.dataIsLoading = function() {
+    console.log(loaded);
+    return loaded < 2;
+  };
 
   $scope.saveArticle = function() {
     var url = $scope.reading.url;
