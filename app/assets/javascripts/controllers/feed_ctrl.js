@@ -1,9 +1,7 @@
-app.controller("FeedCtrl", ["$scope", "Feed", "$location", function($scope, Feed, $location) {
-
+app.controller("FeedCtrl", ["$scope", "$location", "Feed", function($scope, $location, Feed) {
   $scope.createFeed = function() {
-    var feed = new Feed({url: $scope.feedUrl});
-    feed.$save(function() {
-      $location.path("/");
+    Feed.save($scope.feedUrl, function() {
+      $location.path('/');
     });
   }
 }]);
