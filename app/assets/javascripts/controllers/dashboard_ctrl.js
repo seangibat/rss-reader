@@ -16,7 +16,6 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
   });
 
   $scope.dataIsLoading = function() {
-    console.log(loaded);
     return loaded < 2;
   };
 

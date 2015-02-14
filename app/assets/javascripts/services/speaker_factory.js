@@ -5,7 +5,7 @@ app.factory('Speaker', ['VoiceSettings', function (VoiceSettings) {
   }
 
   service.play = function(article){
-    if (VoiceSettings.settings.voice.name) {
+    if (VoiceSettings.settings.voice) {
       speaker.voice(VoiceSettings.settings.voice.name);
     }
     service.paused = false;
