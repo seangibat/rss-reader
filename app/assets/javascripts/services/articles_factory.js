@@ -28,10 +28,10 @@ app.factory('Article', ['$resource', function ($resource) {
           sessionArticles = JSON.parse(sessionArticles);
           sessionArticles.push(foundArticle);
         } else {
-          sessionStorage.setItem('articles', JSON.stringify(foundArticle));
+          sessionArticles = [foundArticle];
         }
         if(callback) {
-          callback(sessionArticles || foundArticle);
+          callback(sessionArticles);
         }
         sessionArticles = JSON.stringify(sessionArticles);
         sessionStorage.setItem('articles', sessionArticles);
