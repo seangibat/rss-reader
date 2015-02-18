@@ -21,6 +21,7 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
 
   $scope.saveArticle = function() {
     var url = $scope.reading.url;
+    $scope.processingSave = true;
     Article.save(url, function(sessionArticles) {
       $scope.articles = sessionArticles;
     });
@@ -43,10 +44,11 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
     $scope.reading = article;
   };
 
-  $scope.archiveArticle = function() {
-    Article.update($scope.reading, function(sessionArticles) {
-      $scope.articles = sessionArticles;
-    });
-  };
+  // $scope.archiveArticle = function() {
+  //   $scope.processingArchive = true;
+  //   Article.update($scope.reading, function(sessionArticles) {
+  //     $scope.articles = sessionArticles;
+  //   });
+  // };
 
 }]);
