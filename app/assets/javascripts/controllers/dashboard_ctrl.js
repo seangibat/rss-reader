@@ -1,9 +1,11 @@
-app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 'Speaker', function($scope, $route, $sce, Feed, Article, Speaker){
+app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 'Speaker', 'flash', '$timeout', function($scope, $route, $sce, Feed, Article, Speaker, flash, $timeout){
   $('.dropdown-toggle').dropdown();
   $scope.Speaker = Speaker;
   $scope.reading = null;
   $scope.articlesShowing = false;
+  $scope.flash = flash;
   var loaded = 0;
+
 
   Article.query(function(data){
     ++loaded;
@@ -22,10 +24,16 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
   $scope.saveArticle = function() {
     var url = $scope.reading.url;
     $scope.processingSave = true;
+    $scope.flashDisplay = true;
     Article.save(url, function(sessionArticles) {
+      $timeout($scope.resetFlashTimeout, 1000);
       $scope.articles = sessionArticles;
     });
   };
+
+  $scope.resetFlashTimeout = function() {
+    $scope.flashDisplay = false;
+  }
 
   // Allow Angular to display content text as html
   $scope.sanitize = function(str){
@@ -43,12 +51,5 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
     $scope.listeningSourceTitle = feedTitle;
     $scope.reading = article;
   };
-
-  // $scope.archiveArticle = function() {
-  //   $scope.processingArchive = true;
-  //   Article.update($scope.reading, function(sessionArticles) {
-  //     $scope.articles = sessionArticles;
-  //   });
-  // };
 
 }]);
