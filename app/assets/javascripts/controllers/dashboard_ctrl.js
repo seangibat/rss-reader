@@ -33,6 +33,7 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
 
   $scope.resetFlashTimeout = function() {
     $scope.flashDisplay = false;
+    $scope.processingSave = false;
   }
 
   // Allow Angular to display content text as html
