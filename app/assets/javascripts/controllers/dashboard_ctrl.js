@@ -1,4 +1,4 @@
-app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 'Speaker', 'flash', '$timeout', function($scope, $route, $sce, Feed, Article, Speaker, flash, $timeout){
+app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 'Speaker', 'flash', '$timeout', 'Spinner', function($scope, $route, $sce, Feed, Article, Speaker, flash, $timeout, Spinner){
   $('.dropdown-toggle').dropdown();
   $scope.Speaker = Speaker;
   $scope.reading = null;
@@ -6,20 +6,17 @@ app.controller('DashboardCtrl', ['$scope', '$route', '$sce', 'Feed', 'Article', 
   $scope.flash = flash;
   var loaded = 0;
 
+  Spinner.start('loading-icon');
 
   Article.query(function(data){
-    ++loaded;
     $scope.articles = data;
+    if (++loaded >= 2) Spinner.stop();
   });
 
   Feed.query(function(data){
-    ++loaded;
     $scope.feeds = data;
+    if (++loaded >= 2) Spinner.stop();
   });
-
-  $scope.dataIsLoading = function() {
-    return loaded < 2;
-  };
 
   $scope.saveArticle = function() {
     var url = $scope.reading.url;
