@@ -29,11 +29,13 @@ app.factory('Speaker', ['VoiceSettings', function (VoiceSettings) {
   }
 
   service.increaseRate = function() {
-    speaker.increaseRate();
+    VoiceSettings.settings.rate += 0.2;
+    VoiceSettings.save();
   };
 
   service.decreaseRate = function() {
-    speaker.decreaseRate();
+    VoiceSettings.settings.rate -= 0.2;
+    VoiceSettings.save();
   };
 
   return service;
