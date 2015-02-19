@@ -1,5 +1,5 @@
+require 'rss'
 class Feed < ActiveRecord::Base
-  require 'rss'
   belongs_to :user
 
   validates :url, presence: true
