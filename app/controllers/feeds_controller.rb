@@ -5,10 +5,8 @@ class FeedsController < ApplicationController
   # GET /feeds
   # GET /feeds.json
   def index
-
     @feeds = current_user.feeds
     @feed_array = current_user.feeds.feedjira_index(@feeds)
-
     render json: @feed_array
   end
 
@@ -16,9 +14,7 @@ class FeedsController < ApplicationController
   # GET /feeds/1.json
   def show
 
-    @feed = current_user.feeds.find(params[:id])
     @this_feed = current_user.feeds.feedjira_show(@feed)
-
     render json: @this_feed
   end
 

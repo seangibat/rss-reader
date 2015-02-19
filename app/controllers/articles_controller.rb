@@ -1,7 +1,4 @@
 class ArticlesController < ApplicationController
-  require 'readability'
-  require 'nokogiri'
-  require 'open-uri'
   before_action :require_signin
   before_action :set_article, only: [:show, :edit, :update, :destroy]
 
@@ -31,13 +28,15 @@ class ArticlesController < ApplicationController
   # POST /articles.json
   def create
     @article = current_user.articles.new(article_params)
-    #Nokogiri for title
-    doc = Nokogiri::HTML(open(@article.url))
-    @article.title = doc.css('title').text
-    #Readability for content
-    source = open(@article.url).read
-    content = Readability::Document.new(source).content
-    @article.content = content
+
+    current_user.articles.read_nokogiri(@article)
+    # #Nokogiri for title
+    # doc = Nokogiri::HTML(open(@article.url))
+    # @article.title = doc.css('title').text
+    # #Readability for content
+    # source = open(@article.url).read
+    # content = Readability::Document.new(source).content
+    # @article.content = content
 
     respond_to do |format|
       if @article.save
