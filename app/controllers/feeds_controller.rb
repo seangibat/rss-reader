@@ -1,57 +1,25 @@
 class FeedsController < ApplicationController
-  require 'rss'
   before_action :require_signin
   before_action :set_feed, only: [:show, :edit, :update, :destroy]
 
   # GET /feeds
   # GET /feeds.json
   def index
-    @feeds = current_user.feeds.all
-    urls = []
-    @feeds.each do |feed|
-      urls.push feed.url
-    end
-    @feedjira_feeds = Feedjira::Feed.fetch_and_parse urls
 
-    @arrFeeds = []
+    @feeds = current_user.feeds
+    @feed_array = current_user.feeds.feedjira_index(@feeds)
 
-    id_count = 0
-    @feedjira_feeds.each{ |key, feed|
-      this_id = @feeds[id_count].id
-      id_count += 1
-      @arrFeeds.push({
-        title: feed.title,
-        description: feed.description,
-        url: feed.url,
-        id: this_id,
-        entries: feed.entries.map { |entry| 
-          entry.inject({}) { |obj, attr| 
-            obj[attr[0]] = attr[1]; 
-            obj 
-          } 
-        }
-      })
-    }
-
-    render json: @arrFeeds
+    render json: @feed_array
   end
 
   # GET /feeds/1
   # GET /feeds/1.json
   def show
-    @this_feed = current_user.feeds.find(params[:id])
-    urls = []
-    urls.push @this_feed.url
-    @feed = Feedjira::Feed.fetch_and_parse @this_feed.url
 
-    @feed.entries = @feed.entries.map { |entry| 
-      entry.inject({}) { |obj, attr| 
-        obj[attr[0]] = attr[1]; 
-        obj 
-      } 
-    }
+    @feed = current_user.feeds.find(params[:id])
+    @this_feed = current_user.feeds.feedjira_show(@feed)
 
-    render json: @feed
+    render json: @this_feed
   end
 
   # GET /feeds/new

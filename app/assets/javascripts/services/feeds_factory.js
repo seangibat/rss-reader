@@ -18,11 +18,10 @@ app.factory('Feed', ['$resource', function ($resource) {
 
   var save = function(feedUrl, callback) {
     var feed = new Feed({url: feedUrl});
-    console.log(feed);
     feed.$save(function(savedFeed){
-      console.log(savedFeed);
       var savedFeedId = savedFeed.id;
       Feed.get({id: savedFeedId}, function(foundFeed) {
+        // var foundFeed = foundFeed[feedUrl];
         console.log(foundFeed);
         var sessionFeeds = sessionStorage.getItem('feeds');
         sessionFeeds = JSON.parse(sessionFeeds);
