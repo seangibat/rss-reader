@@ -1,21 +1,29 @@
-<div style="text-align:center">
-  <h1>Add Article</h1>
-  <br>
-  <form name="newArticleForm" ng-submit="newArticleForm.$valid && createArticle()" novalidate>
-    <div>
-      <input type="text" ng-model="articleUrl" required class="form-control" placeholder="Enter Url here..."><br>
-      <input type="submit" class="btn btn-primary">
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="article-dashboard">
+        <div class="add-article">
+          <h1>Add Article</h1>
+          <br>
+          <form name="newArticleForm" ng-submit="newArticleForm.$valid && createArticle()" novalidate>
+            <div>
+              <input type="text" ng-model="articleUrl" required class="form-control" placeholder="Enter Url here..."><br>
+              <input type="submit" class="btn btn-primary">
+            </div>
+          </form>
+        </div>
+        <div class="remove-dashboard">
+          <h1>Remove Article</h1>
+          <table class="table table-border table-hover">
+            <tr ng-repeat="article in articles">
+              <td>
+                {{article.title}}
+              </td>
+              <td><button ng-click="deleteArticle(article.id)" class="btn btn-danger">Delete</button></td>
+            </tr>
+          </table>
+        </div>
+      </div>
     </div>
-  </form>
-</div>
-<div>
-  <h1 style="text-align:center">Remove Article</h1>
-  <table class="table table-border table-hover">
-    <tr ng-repeat="article in articles">
-      <td>
-        {{article.title}}
-      </td>
-      <td><button ng-click="deleteArticle(article.id)" class="btn btn-danger">Delete</button></td>
-    </tr>
-  </table>
+  </div>
 </div>
